@@ -103,8 +103,8 @@ class Truck:
             h = vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
             w = vid.get(cv2.CAP_PROP_FRAME_WIDTH)
             print(f"format : {extension}")
-            print(f"size : {(w,h)}")
-            return {"filename":fileloc,"format":extension, 'size':(w,h)}
+            print(f"size : {(int(w),int(h))}")
+            return {"filename":fileloc,"format":extension, 'size':(int(w),int(h))}
         else:
             raise Exception('file type error')
     
