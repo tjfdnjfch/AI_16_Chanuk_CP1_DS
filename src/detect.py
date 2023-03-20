@@ -27,7 +27,7 @@ ansi_escape = re.compile(r'''
 class Truck:
     def __init__(self, source, project = './', output = '', conf = 0.7):
         self.source = source
-        extension = os.path.splitext(source)[-1]
+        extension = os.path.splitext(source)[-1].lstrip('.')
         if extension == "":
             raise Exception('Folder types are not supported.')
         
@@ -56,7 +56,7 @@ class Truck:
 
     def show(self, detected = 0):
         fileloc = self.savedloc_file if detected else self.source
-        extension = os.path.splitext(fileloc)[-1]
+        extension = os.path.splitext(fileloc)[-1].lstrip('.')
 
         if extension in img_formats:
             img=cv2.imread(fileloc)
@@ -79,7 +79,7 @@ class Truck:
     
     def info(self, detected = 0):
         fileloc = self.savedloc_file if detected else self.source
-        extension = os.path.splitext(fileloc)[-1]
+        extension = os.path.splitext(fileloc)[-1].lstrip('.')
         if extension in img_formats:
             image = Image.open(fileloc)
             print(f"format : {image.format}")
