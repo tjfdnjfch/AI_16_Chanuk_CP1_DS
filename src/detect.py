@@ -26,6 +26,8 @@ ansi_escape = re.compile(r'''
 
 class Truck:
     def __init__(self, source, project = './', output = '', conf = 0.7):
+        modulepath = os.path.dirname(os.path.abspath(__file__))
+
         self.source = source
         extension = os.path.splitext(source)[-1].lstrip('.')
         if extension == "":
@@ -33,13 +35,19 @@ class Truck:
         
         if (extension not in img_formats) and (extension not in vid_formats):
             raise Exception(f'File type [{extension}] is not supported by this model.')
-        
+        return
+    
+    def detect(self, project = './', output = '', conf = 0.7):
+        source = self.source
+        modulepath = os.path.dirname(os.path.abspath(__file__))
 
+        self.source = source
+        
         if output == '':
             output = os.path.basename(source).replace('.', '_')
         
-        detect = "../models/yolov5/detect.py"
-        weightpt = "../models/yolov5m_result10/weights/best.pt"
+        detect =  os.path.join(modulepath, "../models/yolov5/detect.py")
+        weightpt = os.path.join(modulepath, "../models/yolov5m_result10/weights/best.pt")
         code = f"python {detect} --weights {weightpt} --source {source} --project {project} --name {output} --conf {conf} --save-txt --save-conf"
         process = subprocess.Popen(code, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         self.process_output = process.communicate()[0].decode("utf-8")
@@ -68,7 +76,10 @@ class Truck:
             frameTime = 10
             while(vid.isOpened()):
                 ret, frame = vid.read()
-                cv2.imshow('frame',frame)
+                try:
+                    cv2.imshow('frame',frame)
+                except:
+                    break
                 if cv2.waitKey(frameTime) & 0xFF == ord('q'):
                     break
             vid.release()
