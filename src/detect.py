@@ -25,7 +25,7 @@ ansi_escape = re.compile(r'''
 
 
 class Truck:
-    def __init__(self, source, project = './', output = '', conf = 0.7):
+    def __init__(self, source):
         modulepath = os.path.dirname(os.path.abspath(__file__))
 
         self.source = source
