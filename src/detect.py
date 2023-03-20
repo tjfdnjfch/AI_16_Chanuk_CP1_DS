@@ -39,7 +39,7 @@ class Truck:
             output = os.path.basename(source).replace('.', '_')
         
         detect = "../models/yolov5/detect.py"
-        weightpt = "../models/yolov5/runs/train/yolov5m_result10/weights/best.pt"
+        weightpt = "../models/yolov5m_result10/weights/best.pt"
         code = f"python {detect} --weights {weightpt} --source {source} --project {project} --name {output} --conf {conf} --save-txt --save-conf"
         process = subprocess.Popen(code, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         self.process_output = process.communicate()[0].decode("utf-8")
@@ -97,7 +97,7 @@ class Truck:
         else:
             raise Exception('file type error')
     
-    
+
         
 
 
